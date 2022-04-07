@@ -1,10 +1,10 @@
-import {Users, User} from "./components";
+import {Users} from "./components";
+import css from "./App.module.css"
 
 function App() {
     return (
-        <div>
+        <div className={css.users}>
             <Users/>
-            <User/>
         </div>
     );
 }
