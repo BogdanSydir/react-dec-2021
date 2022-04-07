@@ -1,7 +1,10 @@
+import {Users, User} from "./components";
+
 function App() {
     return (
         <div>
-            hello
+            <Users/>
+            <User/>
         </div>
     );
 }
