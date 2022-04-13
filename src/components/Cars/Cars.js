@@ -2,13 +2,13 @@ import {useEffect, useState} from "react";
 import {carService} from "../../services";
 import {Car} from "../Car/Car";
 
-const Cars = ({newCar, setCarForUpdate}) => {
+const Cars = ({newCar, setCarForUpdate, updatedCar}) => {
     const [cars, setCars] = useState([])
     const [deletedCarId, setDeletedCarId] = useState(null)
 
     useEffect(()=>{
         carService.getAll().then(({data})=>setCars(data))
-    },[])
+    },[updatedCar])
 
     useEffect(()=>{
         if(newCar){

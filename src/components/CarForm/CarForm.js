@@ -5,7 +5,7 @@ import {carService} from "../../services";
 import {carValidator} from "../../validators";
 import {useEffect} from "react";
 
-const CarForm = ({setNewCar, carForUpdate}) => {
+const CarForm = ({setNewCar, carForUpdate, setUpdatedCar}) => {
     const {register, reset, handleSubmit, formState: {errors}, setValue} = useForm({
         resolver: joiResolver(carValidator),
         mode: "onTouched"
@@ -23,10 +23,8 @@ const CarForm = ({setNewCar, carForUpdate}) => {
     const mySubmit = async (car) => {
         if (carForUpdate) {
             const {data} = await carService.updateById(carForUpdate.id, car)
-            setNewCar(data)
-            console.log('if')
-            console.log(data)
-            console.log(car)
+            setUpdatedCar(data)
+
         } else {
 
             console.log('else')
