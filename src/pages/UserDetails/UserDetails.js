@@ -2,7 +2,7 @@ import {useLocation, useParams} from "react-router-dom";
 import {useEffect, useState} from "react";
 
 import {userService} from "../../services";
-import {UserDetail} from "../../components";
+import {UserDetail, UserPosts} from "../../components";
 
 const UserDetails = () => {
         const {id} = useParams()
@@ -16,6 +16,7 @@ const UserDetails = () => {
     return (
         <div>
             {userDetails && <UserDetail userDetail={userDetails}/>}
+            <UserPosts/>
         </div>
     );
 };

@@ -1,3 +1,5 @@
+import {Link} from "react-router-dom";
+
 const UserDetail = ({userDetail}) => {
     const {id, name, username, email, address, phone, website, company} = userDetail
     return (
@@ -15,6 +17,9 @@ const UserDetail = ({userDetail}) => {
             <div>company:  <br/> name: {company?.name} <br/> catchPhrase: {company?.catchPhrase}
                 <br/> bs: {company?.bs}
             </div>
+            <Link to={'posts'}>
+                <button>get posts</button>
+            </Link>
         </div>
     );
 };
