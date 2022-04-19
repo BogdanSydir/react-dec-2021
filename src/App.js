@@ -1,7 +1,8 @@
 import {Routes, Route, Navigate} from "react-router-dom";
 import {MainLayout} from "./layouts";
-import {AboutPage, HomePage, NotFoundPage, PostsPage, PostDetails, UsersPage, UserDetails} from "./pages";
+import {AboutPage, HomePage, NotFoundPage, PostsPage, PostDetails, UsersPage, UserDetails, LoginPage} from "./pages";
 import {UserPosts} from "./components";
+import {RequireAuth} from "./hoc/RequireAuth";
 
 function App() {
     return (
@@ -10,7 +11,12 @@ function App() {
                 <Route index element={<Navigate to={'home'}/>}/>
                 <Route path={'home'} element={<HomePage/>}/>
 
-                <Route path={'users'} element={<UsersPage/>}>
+                <Route path={'users'} element={
+
+                    <RequireAuth>
+                        <UsersPage/>
+                    </RequireAuth>}>
+
                     <Route path={':id'} element={<UserDetails/>}>
                         <Route path={':posts'} element={<UserPosts/>}/>
                     </Route>
@@ -22,6 +28,7 @@ function App() {
 
 
                 <Route path={'about'} element={<AboutPage/>}/>
+                <Route path={'login'} element={<LoginPage/>}/>
                 <Route path={'*'} element={<NotFoundPage/>}/>
             </Route>
         </Routes>
