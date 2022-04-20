@@ -1,5 +1,5 @@
 import {useEffect, useState} from "react";
-import {Outlet, useParams} from "react-router-dom";
+import {useParams} from "react-router-dom";
 
 import {userService} from "../../services";
 import {UserPost} from "../UserPost/UserPost";
@@ -13,7 +13,6 @@ const UserPosts = () => {
     return (
         <div>
             {posts.map(post => <UserPost key={post.id} post={post}/>)}
-            <Outlet/>
         </div>
     );
 };

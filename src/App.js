@@ -11,11 +11,7 @@ function App() {
                 <Route index element={<Navigate to={'home'}/>}/>
                 <Route path={'home'} element={<HomePage/>}/>
 
-                <Route path={'users'} element={
-
-                    <RequireAuth>
-                        <UsersPage/>
-                    </RequireAuth>}>
+                <Route path={'users'} element={<RequireAuth> <UsersPage/> </RequireAuth>}>
 
                     <Route path={':id'} element={<UserDetails/>}>
                         <Route path={':posts'} element={<UserPosts/>}/>
