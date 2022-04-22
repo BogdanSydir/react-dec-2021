@@ -40,7 +40,7 @@ const reduser = (state, action) => {
 
 function App() {
 
-    const [state, dispatch] = useReducer(reduser, 0, init)
+    const [state, dispatch] = useReducer(reduser, 0, init) // dispatch передає дані в reduser action.type, state бере з reduser state
 
     // const inc = () =>{
     //     dispatch({type: 'inc'})
