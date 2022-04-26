@@ -1,7 +1,11 @@
+import {Cats, Dogs, Form} from "./components";
+
 function App() {
     return (
         <div>
-            hello
+            <Form/>
+            <Cats/>
+            <Dogs/>
         </div>
     );
 }
