@@ -5,7 +5,7 @@ import {carService} from "../../services";
 const initialState = {
     cars: [],
     status: null,
-    formErrors:{}
+    formErrors: {}
 }
 const getAll = createAsyncThunk( //2. робимо запит на сервер
     'carSlice/getAll',
@@ -24,11 +24,20 @@ const create = createAsyncThunk(
             // dispatch(createSync({car:data}))       //синхронний варіант запису
             return data // повертає у [create.fulfilled] як action.payload
         } catch (e) {
-            return rejectWithValue({result:e.message, formErrors:e.response.data}) // закидує у [create.rejected] як action.payload
+            return rejectWithValue({result: e.message, formErrors: e.response.data}) // закидує у [create.rejected] як action.payload
         }
     }
 )
 
+const deleteById = createAsyncThunk(
+    'delete',
+    async ({id}) => {
+        await carService.deleteById(id)
+        console.log('delete by id method, id:', id)
+
+        return id
+    }
+)
 const carSlice = createSlice({
         name: 'carSlice',
         initialState,
@@ -60,18 +69,27 @@ const carSlice = createSlice({
                 state.status = result
                 state.formErrors = formErrors
                 console.log(formErrors)
+            },
+
+            [deleteById.fulfilled]: (state, action) => {
+                console.log(`action.payload:`, action.payload)
+                const index = state.cars.findIndex(car => car.id === action.payload)
+                console.log(`index:`, index)
+                state.cars.splice(index, 1)
             }
         }
     })
 ;
 
-const {reducer: carReducer, actions
-   // :{createSync}             //синхронний варіант запису
+const {
+    reducer: carReducer, actions
+    // :{createSync}             //синхронний варіант запису
 } = carSlice;
 
 const carActions = {
     getAll, //1. -> викликаємо
-    create
+    create,
+    deleteById
 }
 
 export {
