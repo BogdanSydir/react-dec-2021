@@ -1,11 +1,12 @@
-import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
+import {createAsyncThunk, createSlice, current} from "@reduxjs/toolkit";
 
 import {carService} from "../../services";
 
 const initialState = {
     cars: [],
     status: null,
-    formErrors: {}
+    formErrors: {},
+    carToUpdate: null
 }
 const getAll = createAsyncThunk( //2. робимо запит на сервер
     'carSlice/getAll',
@@ -34,14 +35,27 @@ const deleteById = createAsyncThunk(
     async ({id}) => {
         await carService.deleteById(id)
         console.log('delete by id method, id:', id)
-
         return id
     }
 )
+
+const updateById = createAsyncThunk(
+    'update',
+    async ({car, id}) => {
+        await carService.updateById(id, car)
+        return ({id, car})
+    }
+)
+
+
 const carSlice = createSlice({
         name: 'carSlice',
         initialState,
         reducers: {
+            setToUpdate: (state, action) => {
+                state.carToUpdate = state.cars.find(car => car.id === action.payload.id)
+                console.log(`car to upd: `, current(state.carToUpdate)) // без current не виводить масив
+            }
             // createSync:(state, action) =>{
             //     state.cars.push(action.payload.car)  //синхронний варіант запису
             // }
@@ -76,20 +90,29 @@ const carSlice = createSlice({
                 const index = state.cars.findIndex(car => car.id === action.payload)
                 console.log(`index:`, index)
                 state.cars.splice(index, 1)
+            },
+            [updateById.fulfilled]: (state, action) => {
+                const index = state.cars.findIndex(car => car.id === action.payload.id)
+                state.cars[index] = {...state.cars[index], ...action.payload.car}
+                state.carToUpdate = null
             }
         }
     })
 ;
 
 const {
-    reducer: carReducer, actions
+    reducer: carReducer, actions: {
+        setToUpdate
+    }
     // :{createSync}             //синхронний варіант запису
 } = carSlice;
 
 const carActions = {
     getAll, //1. -> викликаємо
     create,
-    deleteById
+    deleteById,
+    setToUpdate,
+    updateById
 }
 
 export {
