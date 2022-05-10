@@ -5,7 +5,7 @@ import {unstable_HistoryRouter as BrowserRouter} from "react-router-dom";
 
 import App from './App';
 import {store} from "./redux";
-import {history} from './services'
+import {history} from './services/axios.service'
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

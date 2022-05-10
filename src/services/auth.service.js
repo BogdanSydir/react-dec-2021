@@ -6,4 +6,6 @@ const authService = {
     refresh: (refresh) => axiosService.post(`${urls.auth}/refresh`, {refresh})
 }
 
-export {authService}
+export {
+    authService
+}
